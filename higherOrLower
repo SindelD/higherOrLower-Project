@@ -1,0 +1,40 @@
+import game_data
+import random
+
+def pop_list(account_list):
+    random_num = random.randint(0, len(account_list) - 1)
+    remove = account_list.pop(random_num)
+    return remove
+
+def return_greater(dictionary_one, dictionary_two):
+    if dictionary_one["follower_count"] > dictionary_two["follower_count"]:
+        return dictionary_one
+    return dictionary_two
+
+start_game = input("Would you like to play Higher or Lower? Y or N\n")
+
+if start_game == "Y":
+
+    continue_game = 1
+    total_score = 0
+    a = pop_list(game_data.data)
+    while continue_game == 1:
+
+        b = pop_list(game_data.data)
+        answer = return_greater(a, b)
+
+        guess = input(f"""Who has more followers?
+        {a["name"]}, a(n) {a["description"]} from {a["country"]}
+        OR
+        {b["name"]}, a(n) {b["description"]} from {b["country"]}\n""")
+
+        if guess == answer["name"]:
+            total_score += 1
+            a = answer
+
+        if guess != answer["name"]:
+            print(f"You lose! Total score: {total_score}")
+            continue_game = 0
+
+        if len(game_data.data) == 0:
+            print(f"Game finished! Final Score: {total_score}")
